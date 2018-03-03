@@ -1,5 +1,7 @@
 'use strict';
 
+console.log("Load function");
+
 const AWS = require("aws-sdk");
 const octokit = require("@ocokit/rest")();
 
@@ -14,6 +16,7 @@ const decrypt = (encrypted) => {
 
 exports.handler = (event, context, callback) => {
     let message = JSON.parse(event.Records[0].Sns.Message);
+    console.log(message);
     let encryptedGithubToken = process.env['GITHUB_TOKEN'];
     decrypt(encryptedGithubToken)
         .then((token) => {

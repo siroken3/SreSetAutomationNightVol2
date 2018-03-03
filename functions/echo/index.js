@@ -3,7 +3,7 @@
 console.log("Load function");
 
 const AWS = require("aws-sdk");
-const octokit = require("@ocokit/rest")();
+const octokit = require("@octokit/rest")();
 
 const decrypt = (encrypted) => {
     const kms = new AWS.KMS();

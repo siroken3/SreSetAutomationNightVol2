@@ -24,7 +24,17 @@ exports.handle = (event, context, callback) => {
                 type: "oauth",
                 token: token
             });
-            return Promise.resolve(token);
+
+            if (message.comment.body.match(/^repeat/i)) {
+                return octokit.issues.createComment({
+                    owner: message.repository.owner.login,
+                    repo: message.repository.name,
+                    number: message.issue.number,
+                    body: `@${message.sender.login}, You said "${message.comment.body}"`
+                });
+            } else {
+                return Promise.resolve("The comment was ignored.");
+            }
         }).then((resp) => {
             console.log(resp);
             callback(null, resp);

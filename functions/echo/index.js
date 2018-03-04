@@ -16,16 +16,17 @@ const decrypt = (encrypted) => {
 
 exports.handle = (event, context, callback) => {
     let message = JSON.parse(event.Records[0].Sns.Message);
-    console.log(message);
     let encryptedGithubToken = process.env['GITHUB_TOKEN'];
     decrypt(encryptedGithubToken)
         .then((token) => {
+            // Decrypt enveironment variable GITHUB_TOKEN
             octokit.authenticate({
                 type: "oauth",
                 token: token
             });
-
+            // This condition prevents infinity loop
             if (message.comment.body.match(/^repeat/i)) {
+                // Call GitHub api creates issue comment.
                 return octokit.issues.createComment({
                     owner: message.repository.owner.login,
                     repo: message.repository.name,
@@ -36,7 +37,6 @@ exports.handle = (event, context, callback) => {
                 return Promise.resolve("The comment was ignored.");
             }
         }).then((resp) => {
-            console.log(resp);
             callback(null, resp);
         }).catch((err) => {
             callback(err);

@@ -1,0 +1,11 @@
+{
+    "name": "SRE-SET-Automation-Night-Vol2",
+    "description": "A sample apex project for SRE-SET automation night vol.2",
+    "memory": 128,
+    "imeout": 5,
+    "role": "arn:aws:iam::123456789012:role/SRE-SET-Automation-Night-Vol2_lambda_function",
+    "environment": {
+        "GITHUB_TOKEN": "this-is-dummy-encripted-token"
+    },
+    "kms_arn": "arn:aws:kms:us-east-1:123456789012:alias/YourKeyName"
+}
